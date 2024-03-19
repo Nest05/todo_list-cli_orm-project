@@ -18,7 +18,7 @@ class Category(Base):
     id_ = Column(Integer, primary_key=True)
     name = Column(String, nullable=False)
 
-    todos = relationship('ToDo', backref = 'category')
+    todos = relationship('ToDo', back_populates='category')
 
 class DueDate(Base):
     __tablename__ = 'due_dates'
@@ -26,7 +26,7 @@ class DueDate(Base):
     id_ = Column(Integer, primary_key=True)
     date = Column(DateTime, nullable=False)
 
-    todos =relationship('ToDo', backref='due_date')
+    todos =relationship('ToDo', back_populates='due_date')
 
 
 class ToDo(Base):
@@ -39,8 +39,8 @@ class ToDo(Base):
     category_id = Column(Integer, ForeignKey('categories.id_'), nullable=False)
     due_date_id = Column(Integer, ForeignKey('due_dates.id_'), nullable=False)
 
-    category = relationship('Category', backref='todos')
-    due_date = relationship('DueDate', backref='todos')
+    category = relationship('Category', back_populates='todos')
+    due_date = relationship('DueDate', back_populates='todos')
 
 
 engine = create_engine('sqlite:///todo.db')
