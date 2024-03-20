@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, ForeignKey, DateTime, create_engine
+from sqlalchemy import Column, Integer, String, ForeignKey, DateTime, UniqueConstraint, create_engine
 from sqlalchemy.orm import relationship, declarative_base, sessionmaker
 
 Base = declarative_base()
@@ -10,7 +10,7 @@ class User(Base):
     username = Column(String, unique=True, nullable=False)
     password = Column(String, nullable=False)
 
-    todos = relationship('ToDo', backref='user', cascade='all, delete-orphan')
+    todos = relationship('ToDo')
 
 class Category(Base):
     __tablename__ = 'categories'
@@ -18,7 +18,7 @@ class Category(Base):
     id_ = Column(Integer, primary_key=True)
     name = Column(String, nullable=False)
 
-    todos = relationship('ToDo', back_populates='category')
+    todos = relationship('ToDo')
 
 class DueDate(Base):
     __tablename__ = 'due_dates'
@@ -26,7 +26,7 @@ class DueDate(Base):
     id_ = Column(Integer, primary_key=True)
     date = Column(DateTime, nullable=False)
 
-    todos =relationship('ToDo', back_populates='due_date')
+    todos =relationship('ToDo')
 
 
 class ToDo(Base):
@@ -39,8 +39,11 @@ class ToDo(Base):
     category_id = Column(Integer, ForeignKey('categories.id_'), nullable=False)
     due_date_id = Column(Integer, ForeignKey('due_dates.id_'), nullable=False)
 
-    category = relationship('Category', back_populates='todos')
-    due_date = relationship('DueDate', back_populates='todos')
+    user = relationship("User", back_populates='todos')
+    category = relationship("Category", back_populates='todos')
+    due_date = relationship("DueDate", back_populates='todos')
+
+
 
 
 engine = create_engine('sqlite:///todo.db')
