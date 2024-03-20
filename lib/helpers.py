@@ -11,6 +11,7 @@ result = quote(w, limit=1)
 
 
 def exit_program():
+    print("----------------------------------------------------")
     print(result[0]['quote'])
     print("************************************")
     print(f"Quote by -> {result[0]['author']}")

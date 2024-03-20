@@ -15,12 +15,14 @@ def main():
 
 
 def menu():
+    print("----------------------------------------------------")
     print("Welcome to your trusted todo manager!")
     print("Select what you would like to do: ")
     print("0. Exit the manager")
     print("1. Add a todo")
 
 def return_or_continue():
+    print("----------------------------------------------------")
     print("Would you like to return to the menu or exit?")
     print("1. Return to the menu")
     print("2. Exit")
@@ -28,7 +30,7 @@ def return_or_continue():
     if choice == "1":
         return
     elif choice == "2":
-        exit()
+        exit_program()
 
 if __name__ == "__main__":
     main()
