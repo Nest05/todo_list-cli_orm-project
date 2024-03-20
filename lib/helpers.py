@@ -15,6 +15,7 @@ def exit_program():
     print(result[0]['quote'])
     print("************************************")
     print(f"Quote by -> {result[0]['author']}")
+    print("************************************")
     exit()
 
 def add_todo():
@@ -24,7 +25,7 @@ def add_todo():
         if not users:
             print("No users found. Please create a user first.")
             return
-        
+        print("----------------------------------------------------")
         # Prompt the user to select a user
         print("Select a user:")
         for index, user in enumerate(users):

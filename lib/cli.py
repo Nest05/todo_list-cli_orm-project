@@ -11,7 +11,7 @@ def main():
             exit_program()
         elif choice == "1":
             add_todo()
-            return_or_continue()
+            return_or_exit()
 
 
 def menu():
@@ -21,7 +21,7 @@ def menu():
     print("0. Exit the manager")
     print("1. Add a todo")
 
-def return_or_continue():
+def return_or_exit():
     print("----------------------------------------------------")
     print("Would you like to return to the menu or exit?")
     print("1. Return to the menu")
