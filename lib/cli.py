@@ -21,14 +21,14 @@ def menu():
     print("1. Add a todo")
 
 def return_or_continue():
-    print("Would you like to return to the menu or continue?")
+    print("Would you like to return to the menu or exit?")
     print("1. Return to the menu")
-    print("2. Continue")
+    print("2. Exit")
     choice = input("> ")
     if choice == "1":
         return
     elif choice == "2":
-        pass
+        exit()
 
 if __name__ == "__main__":
     main()
