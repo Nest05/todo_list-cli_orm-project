@@ -28,7 +28,13 @@ class User(Base):
     
     def update_username(self, new_username):
         # Update the username for this user
+        old_username = self.username
         self.username = new_username
+
+        # Update the user name in the todos table
+        todos = session.query(ToDo).filter_by(user_name=old_username).all()
+        for todo in todos:
+            todo.user_name = new_username
         session.commit()
 
     def get_todos(self):
