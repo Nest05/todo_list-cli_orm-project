@@ -5,7 +5,8 @@ from helpers import (
     remove_todo,
     change_username,
     all_todos,
-    category_todos
+    category_todos,
+    add_user
 )
 
 def main():
@@ -18,6 +19,9 @@ def main():
                 exit_program()
             elif choice == "1":
                 user = login()
+                try_again()
+            elif choice == "2":
+                add_user()
                 try_again()
         else:
             sub_main(user)
@@ -41,7 +45,7 @@ def sub_main(user):
             all_todos(user)
             return_or_exit()
         elif choice == "5":
-            category_todos()
+            category_todos(user)
             return_or_exit()
 
 def menu():
@@ -61,6 +65,7 @@ def login_menu():
     print("login below: ")
     print("0. Exit the manager")
     print("1. Login")
+    print("2. Signup")
 
 def return_or_exit():
     print("----------------------------------------------------")
@@ -75,7 +80,7 @@ def return_or_exit():
 
 def try_again():
     print("----------------------------------------------------")
-    print("Would you like to try again or exit?")
+    print("Would you like to the login menu or exit?")
     print("1. Return to the login menu")
     print("2. Exit")
     choice = input("> ")

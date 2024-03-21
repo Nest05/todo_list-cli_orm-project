@@ -20,6 +20,23 @@ def exit_program():
     print("************************************")
     exit()
 
+def add_user():
+    try: 
+        print("----------------------------------------------------")
+        print("Sign up here:")
+        print("******")
+        username = input("Enter your username: ")
+        print("******")
+        password = input("Enter your password: ")
+        print("******")
+        new_user = User(username=username, password=password)
+        session.add(new_user)
+        session.commit()
+
+        print(f"Welcome {username}! You signed up successfully!")
+    except Exception as exc:
+        print("An error occured in the signup process:", exc)
+
 def login():
     from cli import sub_main
     try:
@@ -55,6 +72,7 @@ def login():
 
 def add_todo(user):
     try:
+        print("----------------------------------------------------")
         task = input("Enter the task: ")
         category_name = input("Enter the category: ")
         due_date_str = input("Enter the due date (YYYY-MM-DD HH:MM:SS): ")
@@ -124,17 +142,15 @@ def all_todos(user):
     except Exception as exc:
         print("Error getting todos: ", exc)
 
-def category_todos(user=None):
+def category_todos(user):
     try:
-        if user is None:
-            user = session.query(User).first()
-            
         # Get all categories
         categories = session.query(Category).all()
-
+        print("----------------------------------------------------") 
         # loop through categories
         for category in categories:
-            print(f"\nCategory: {category.name}")
+            print("\U00002B50----------\U00002B50----------\U00002B50----------\U00002B50----------\U00002B50")
+            print(f">>> {category.name}")
             todos = category.get_todos()
 
             # Filter todos by user
@@ -143,6 +159,7 @@ def category_todos(user=None):
             # Print todos for the current category and user
             for i, todo in enumerate(user_todos):
                 print(f"{i+1}. {todo.task} (Due Date: {todo.due_date_date})")
+                
 
     except Exception as exc:
         print("Error getting todos:", exc)
