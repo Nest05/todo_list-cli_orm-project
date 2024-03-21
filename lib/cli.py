@@ -4,7 +4,8 @@ from helpers import (
     add_todo,
     remove_todo,
     change_username,
-    all_todos
+    all_todos,
+    category_todos
 )
 
 def main():
@@ -39,6 +40,9 @@ def sub_main(user):
         elif choice == "4":
             all_todos(user)
             return_or_exit()
+        elif choice == "5":
+            category_todos()
+            return_or_exit()
 
 def menu():
     print("----------------------------------------------------")
@@ -49,10 +53,11 @@ def menu():
     print("2. Remove a todo")
     print("3. Change username")
     print("4. See all my todos")
+    print("5. Todos by category")
 
 def login_menu():
     print("----------------------------------------------------")
-    print("Welcome to your trusted todo manager!")
+    print("\U0001F5D2 Welcome to your trusted todo manager! \U0001F4D3")
     print("login below: ")
     print("0. Exit the manager")
     print("1. Login")

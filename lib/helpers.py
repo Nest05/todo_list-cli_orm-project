@@ -42,14 +42,14 @@ def login():
             return
 
         user = users[user_index]
-        password = getpass("Enter your password: ")
+        password = getpass("Enter your password \U0001F50F: ")
 
         # Validate the password
         if user.password == password:
-            print("You have successfully logged in!")
+            print("You have successfully logged in! \U0001F4AF")
             sub_main(user)    
         else:
-            print("Incorrect password.")
+            print("Incorrect password! \U0001F6AB \U0001FAE2")
     except Exception as exc:
         print("Error logging in: ", exc)
 
@@ -123,3 +123,26 @@ def all_todos(user):
             print(f"//-> Todo: {todo.task} //-> DueDate: {todo.due_date_date}")
     except Exception as exc:
         print("Error getting todos: ", exc)
+
+def category_todos(user=None):
+    try:
+        if user is None:
+            user = session.query(User).first()
+            
+        # Get all categories
+        categories = session.query(Category).all()
+
+        # loop through categories
+        for category in categories:
+            print(f"\nCategory: {category.name}")
+            todos = category.get_todos()
+
+            # Filter todos by user
+            user_todos = [todo for todo in todos if todo.user_name == user.username]
+
+            # Print todos for the current category and user
+            for i, todo in enumerate(user_todos):
+                print(f"{i+1}. {todo.task} (Due Date: {todo.due_date_date})")
+
+    except Exception as exc:
+        print("Error getting todos:", exc)
