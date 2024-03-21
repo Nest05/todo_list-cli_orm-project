@@ -3,7 +3,7 @@ from datetime import datetime
 from getpass import getpass
 from quote import quote
 from py_random_words import RandomWords
-from cli import menu
+from cli import sub_main
 
 random_word = RandomWords()
 w = random_word.get_word()
@@ -46,7 +46,7 @@ def login():
 
         # Validate the password
         if user.password == password:
-            menu(user)
+            sub_main(user)
         else:
             print("Incorrect password.")
     except Exception as exc:

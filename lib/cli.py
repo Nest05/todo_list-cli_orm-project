@@ -5,8 +5,22 @@ from helpers import (
 )
 
 def main():
+    user = None # Initialize user as None
     while True:
-        login_menu()
+        if user is None: # Check if user is not logged in
+            login_menu()
+            choice = input("-> ")
+            if choice == "0":
+                exit_program()
+            elif choice == "1":
+                user = login()
+                try_again()
+        else:
+            sub_main(user)
+
+def sub_main(user):
+    while True:
+        menu()
         choice = input("-> ")
         if choice == "0":
             exit_program()
@@ -30,8 +44,8 @@ def login_menu():
 
 def return_or_exit():
     print("----------------------------------------------------")
-    print("Would you like to return to the login menu or exit?")
-    print("1. Return to the login menu")
+    print("Would you like to return to the menu or exit?")
+    print("1. Return to the menu")
     print("2. Exit")
     choice = input("> ")
     if choice == "1":
