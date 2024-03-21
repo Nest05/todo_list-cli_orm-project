@@ -3,7 +3,6 @@ from datetime import datetime
 from getpass import getpass
 from quote import quote
 from py_random_words import RandomWords
-from cli import sub_main
 
 random_word = RandomWords()
 w = random_word.get_word()
@@ -20,6 +19,7 @@ def exit_program():
     exit()
 
 def login():
+    from cli import sub_main
     try:
         # Retrieve existing users from the databse
         users = session.query(User).all()
@@ -67,5 +67,5 @@ def add_todo(user):
     except Exception as exc:
         print("Error adding todo: ", exc)
 
-def remove_todo():
+# def remove_todo():
 

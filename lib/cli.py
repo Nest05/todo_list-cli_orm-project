@@ -25,7 +25,7 @@ def sub_main(user):
         if choice == "0":
             exit_program()
         elif choice == "1":
-            add_todo()
+            add_todo(user)
             return_or_exit()
 
 def menu():
