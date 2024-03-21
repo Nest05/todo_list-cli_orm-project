@@ -42,7 +42,7 @@ def sub_main(user):
 
 def menu():
     print("----------------------------------------------------")
-    print("***Todo Menu***")
+    print("\U0001F30D \U0001F6EB \U0001F3CA ***Todo Menu*** \U0001FA82 \U0001F4DA \U0001F393")
     print("Select what you would like to do: ")
     print("0. Exit the manager")
     print("1. Add a todo")
