@@ -33,7 +33,7 @@ class User(Base):
 
     def get_todos(self):
         # Get all todos for this user
-        todos = session.query(ToDo).filter_by(user=self).all()
+        todos = session.query(ToDo).filter_by(user=self).order_by(ToDo.due_date_date).all()
         return todos
     
 

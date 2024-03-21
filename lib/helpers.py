@@ -93,3 +93,31 @@ def remove_todo(user):
     except Exception as exc:
         print("Error removing todo: ", exc)
 
+
+def change_username(user):
+    try:
+        print("----------------------------------------------------")         
+        new_username = input("Enter the new username: ")
+        user.update_username(new_username)
+        print(f"Success: Username updated to {new_username}")
+    except Exception as exc:
+        print("Error changing username: ", exc)
+
+def all_todos(user):
+    try:
+        # Get all todos for the user from the database
+        todos = user.get_todos()
+
+        # Check if there are any todos for the user
+        if not todos:
+            print("You have no todos")
+            return
+        
+        print("----------------------------------------------------")      
+        # Print the list of todos with their IDs
+        print("Your todos sorted by date:")
+        for todo in todos:
+            print("******")
+            print(f"//-> Todo: {todo.task} //-> DueDate: {todo.due_date_date}")
+    except Exception as exc:
+        print("Error getting todos: ", exc)
