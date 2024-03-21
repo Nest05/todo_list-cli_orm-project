@@ -3,6 +3,7 @@ from datetime import datetime
 from getpass import getpass
 from quote import quote
 from py_random_words import RandomWords
+from cli import menu
 
 random_word = RandomWords()
 w = random_word.get_word()
@@ -18,7 +19,7 @@ def exit_program():
     print("************************************")
     exit()
 
-def add_todo():
+def login():
     try:
         # Retrieve existing users from the databse
         users = session.query(User).all()
@@ -45,19 +46,26 @@ def add_todo():
 
         # Validate the password
         if user.password == password:
-            task = input("Enter the task: ")
-            category_name = input("Enter the category: ")
-            due_date_str = input("Enter the due date (YYYY-MM-DD HH:MM:SS): ")
-
-            # Retrieve category and due date objects based on input values 
-            category = session.query(Category).filter_by(name=category_name).first()
-            due_date = DueDate(date=datetime.strptime(due_date_str, "%Y-%m-%d %H:%M:%S"))
-
-            todo = user.create_todo(task, category, due_date)
-            print(f'Success: <{task}> added to your todos!')
+            menu(user)
         else:
             print("Incorrect password.")
     except Exception as exc:
-        print("Error creating todo: ", exc)
+        print("Error logging in: ", exc)
 
-# add_todo()
+def add_todo(user):
+    try:
+        task = input("Enter the task: ")
+        category_name = input("Enter the category: ")
+        due_date_str = input("Enter the due date (YYYY-MM-DD HH:MM:SS): ")
+
+        # Retrieve category and due date objects based on input values 
+        category = session.query(Category).filter_by(name=category_name).first()
+        due_date = DueDate(date=datetime.strptime(due_date_str, "%Y-%m-%d %H:%M:%S"))
+
+        todo = user.create_todo(task, category, due_date)
+        print(f'Success: <{task}> added to your todos!')
+    except Exception as exc:
+        print("Error adding todo: ", exc)
+
+def remove_todo():
+
