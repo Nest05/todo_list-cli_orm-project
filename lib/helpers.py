@@ -3,6 +3,7 @@ from datetime import datetime
 from getpass import getpass
 from quote import quote
 from py_random_words import RandomWords
+import emoji
 
 random_word = RandomWords()
 w = random_word.get_word()
@@ -12,6 +13,7 @@ result = quote(w, limit=1)
 
 def exit_program():
     print("----------------------------------------------------")
+    print("\U0001F4AD \U0001F4AC \U0001F4AD \U0001F4AC \U0001F4AD \U0001F4AC \U0001F914 \U0001F9D0")
     print(result[0]['quote'])
     print("************************************")
     print(f"Quote by -> {result[0]['author']}")
@@ -28,7 +30,7 @@ def login():
             return
         print("----------------------------------------------------")
         # Prompt the user to select a user
-        print("Select a user:")
+        print("Select a user \U0001F642:")
         for index, user in enumerate(users):
             print(f"{index+1}. {user.username}")
         user_choice = input("Enter the user number: ")
@@ -78,10 +80,10 @@ def remove_todo(user):
         
         print("----------------------------------------------------")      
         # Print the list of todos with their IDs
-        print("Your todos:")
+        print("Your todos \U0001F913:")
         for todo in todos:
             print("******")
-            print(f"ID: {todo.id_} //-> Todo: {todo.task} //-> DueDate: {todo.due_date_date}")
+            print(f"ID: {todo.id_} //-> Todo: {todo.task} //-> DueDate \U000023F3: {todo.due_date_date}")
 
         # Prompt teh user to enter the ID of the todo they want to delete
         delete_id = int(input("Enter the ID of the todo to delete: "))
