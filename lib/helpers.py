@@ -39,14 +39,13 @@ def login():
             print("Invalid user selection.")
             return
 
-
         user = users[user_index]
         password = getpass("Enter your password: ")
 
-
         # Validate the password
         if user.password == password:
-            sub_main(user)
+            print("You have successfully logged in!")
+            sub_main(user)    
         else:
             print("Incorrect password.")
     except Exception as exc:
@@ -67,5 +66,30 @@ def add_todo(user):
     except Exception as exc:
         print("Error adding todo: ", exc)
 
-# def remove_todo():
+def remove_todo(user):
+    try:
+        # Get all todos for the user from the database
+        todos = session.query(ToDo).filter_by(user_name=user.username).all()
+
+        # Check if there are any todos for the user
+        if not todos:
+            print("You have no todos")
+            return
+        
+        print("----------------------------------------------------")      
+        # Print the list of todos with their IDs
+        print("Your todos:")
+        for todo in todos:
+            print("******")
+            print(f"ID: {todo.id_} //-> Todo: {todo.task} //-> DueDate: {todo.due_date_date}")
+
+        # Prompt teh user to enter the ID of the todo they want to delete
+        delete_id = int(input("Enter the ID of the todo to delete: "))
+
+        # Call the delete_todo function to delete the selscted todo
+        user.delete_todo(delete_id)
+
+        print(f"Success: Todo deleted!")
+    except Exception as exc:
+        print("Error removing todo: ", exc)
 

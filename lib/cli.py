@@ -1,7 +1,8 @@
 from helpers import (
     exit_program,
     login,
-    add_todo
+    add_todo,
+    remove_todo
 )
 
 def main():
@@ -27,13 +28,17 @@ def sub_main(user):
         elif choice == "1":
             add_todo(user)
             return_or_exit()
+        elif choice == "2":
+            remove_todo(user)
+            return_or_exit()
 
 def menu():
     print("----------------------------------------------------")
-    print("You have successfully logged in!")
+    print("***Todo Menu***")
     print("Select what you would like to do: ")
     print("0. Exit the manager")
     print("1. Add a todo")
+    print("2. Remove a todo")
 
 def login_menu():
     print("----------------------------------------------------")
