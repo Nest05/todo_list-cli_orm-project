@@ -10,7 +10,8 @@ from helpers import (
     change_username,
     all_todos,
     category_todos,
-    add_user
+    add_user,
+    change_task
 )
 tprint("BespokeRoutine", font="random")
 def main():
@@ -51,10 +52,13 @@ def sub_main(user):
         elif choice == "5":
             category_todos(user)
             return_or_exit()
+        elif choice == "6":
+            change_task(user)
+            return_or_exit()
 
 def menu():
     print(Fore.LIGHTMAGENTA_EX + "----------------------------------------------------")
-    tprint(" ***Todo Menu*** ", font="small", decoration=)
+    tprint(" ***Todo Menu*** ", font="small")
     print(Fore.LIGHTCYAN_EX + "Select what you would like to do: ")
     print(Fore.RED + "0. Exit the manager")
     print("1. Add a todo")
@@ -62,6 +66,7 @@ def menu():
     print("3. Change username")
     print("4. See all my todos")
     print("5. Todos by category")
+    print("6. Edit a task")
 
 def login_menu():
     print(Fore.LIGHTMAGENTA_EX + "----------------------------------------------------")

@@ -49,7 +49,7 @@ def login():
             return
         print(Fore.LIGHTMAGENTA_EX + "----------------------------------------------------")
         # Prompt the user to select a user
-        print(Fore.LIGHTCYAN_EX + "Select a user \U0001F642:")
+        print(Fore.LIGHTCYAN_EX + "Select your user name \U0001F642:")
         for index, user in enumerate(users):
             print(f"{index+1}. {user.username}")
         user_choice = input("Enter the user number: ")
@@ -105,8 +105,12 @@ def remove_todo(user):
             print(Fore.LIGHTMAGENTA_EX + "******")
             print(Fore.LIGHTWHITE_EX + f"ID: {todo.id_} //-> Todo: {todo.task} //-> DueDate \U000023F3: {todo.due_date_date}")
 
-        # Prompt teh user to enter the ID of the todo they want to delete
-        delete_id = int(input(Fore.RED + "[Warning: Once deleted it cannot be retrived!]Enter the ID of the todo to delete: "))
+        # Prompt the user to enter the ID of the todo they want to delete
+        try:
+            delete_id = int(input(Fore.RED + "[Warning: Once deleted it cannot be retrived!]Enter the ID of the todo to delete: "))
+        except ValueError:
+            print(Fore.RED + "Invalid input. ID must be an integer!")
+            return
 
         # Call the delete_todo function to delete the selscted todo
         user.delete_todo(delete_id)
@@ -164,3 +168,48 @@ def category_todos(user):
 
     except Exception as exc:
         print(Fore.RED + "Error getting todos:", exc)
+
+def change_task(user):
+    try:
+        # Get all todos for the user from the database
+        todos = user.get_todos()
+
+        # Check if there are any todos for the user
+        if not todos:
+            print(Fore.RED + "You have no todos")
+            return
+        
+        print(Fore.LIGHTMAGENTA_EX + "----------------------------------------------------")      
+        # Print the list of todos with their IDs
+        print(Fore.BLUE + "Your current tasks:")
+        for todo in todos:
+            print(Fore.LIGHTMAGENTA_EX + "******")
+            print(Fore.LIGHTWHITE_EX+ f"//-> Task ID: {todo.id_} //-> Task: {todo.task}")
+
+        # Prompt user for the todo id to change
+        try:
+            print(Fore.LIGHTMAGENTA_EX + "******")
+            todo_id = int(input("Enter the ID for the task you'd like to change: "))
+
+            # Find the todo with the provided id
+            todo = next((todo for todo in todos if todo.id_ == todo_id), None)
+            if not todo:
+                print(Fore.RED + "Task not found.")
+                return
+            
+            # Prempt the user for the new task
+            print(Fore.LIGHTMAGENTA_EX + "******")
+            new_task = input("Enter the new task: ")
+
+            # Update the task using the update_task method
+            try:
+                todo.update_task(new_task)
+                print(Fore.LIGHTMAGENTA_EX + "******")
+                print(Fore.LIGHTGREEN_EX + f"Task successfully changed to <{new_task}!>")
+            except Exception as exc:
+                print(Fore.RED + f"Error updating task: ", exc)
+        except ValueError:
+            print(Fore.RED + "Invalid input. ID must be an integer!")
+            return
+    except Exception as exc:
+        print(Fore.RED + "Error getting todos: ", exc)

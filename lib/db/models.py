@@ -86,7 +86,13 @@ class ToDo(Base):
 
     def update_task(self, new_task):
         # update the task for this todo
+        old_task = self.task
         self.task = new_task
+
+        # Update the task in the todos table
+        todos = session.query(ToDo).filter_by(task=old_task).all()
+        for todo in todos:
+            todo.task = new_task
         session.commit()
     
     def update_category(self, new_category):
