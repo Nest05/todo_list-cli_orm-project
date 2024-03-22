@@ -11,15 +11,20 @@ from helpers import (
     all_todos,
     category_todos,
     add_user,
-    change_task
+    change_task,
+    change_category
 )
 tprint("BespokeRoutine", font="random")
 def main():
     user = None # Initialize user as None
+    options = ["0", "1", "2"] # Valid options
     while True:
         if user is None: # Check if user is not logged in
             login_menu()
             choice = input("-> ")
+            if choice not in options: # Check if choice is not in the valid options
+                print(Fore.RED + "Invalid input. Please try again.")
+                continue # Go back to the beginning of the loop
             if choice == "0":
                 exit_program()
             elif choice == "1":
@@ -32,9 +37,13 @@ def main():
             sub_main(user)
 
 def sub_main(user):
+    options = ["0", "1", "2", "3", "4", "5", "6", "7"] # Valid options
     while True:
         menu()
         choice = input("-> ")
+        if choice not in options: # Check if choice is not in the valid options
+            print(Fore.RED + "Invalid input. Please try again.")
+            continue
         if choice == "0":
             exit_program()
         elif choice == "1":
@@ -55,6 +64,9 @@ def sub_main(user):
         elif choice == "6":
             change_task(user)
             return_or_exit()
+        elif choice == "7":
+            change_category(user)
+            return_or_exit()
 
 def menu():
     print(Fore.LIGHTMAGENTA_EX + "----------------------------------------------------")
@@ -67,6 +79,7 @@ def menu():
     print("4. See all my todos")
     print("5. Todos by category")
     print("6. Edit a task")
+    print("7. Change a task's category")
 
 def login_menu():
     print(Fore.LIGHTMAGENTA_EX + "----------------------------------------------------")
@@ -77,22 +90,30 @@ def login_menu():
     print("2. Signup")
 
 def return_or_exit():
+    options = ["1", "2"] # Valid options
     print(Fore.LIGHTMAGENTA_EX + "----------------------------------------------------")
     print(Fore.LIGHTCYAN_EX + "Would you like to return to the menu or exit?")
     print("1. Return to the menu")
     print(Fore.RED + "2. Exit")
     choice = input("> ")
+    if choice not in options: # Check if choice is not in the valid options
+        print(Fore.RED + "Invalid input. Please try again.")
+        return
     if choice == "1":
         return
     elif choice == "2":
         exit_program()
 
 def try_again():
+    options = ["1", "2"] # Valid options
     print(Fore.LIGHTMAGENTA_EX + "----------------------------------------------------")
     print(Fore.LIGHTCYAN_EX + "Would you like to the login menu or exit?")
     print("1. Return to the login menu")
     print(Fore.RED + "2. Exit")
     choice = input("> ")
+    if choice not in options: # Check if choice is not in the valid options
+        print(Fore.RED + "Invalid input. Please try again.")
+        return
     if choice == "1":
         return
     elif choice == "2":

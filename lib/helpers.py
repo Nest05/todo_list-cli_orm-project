@@ -84,7 +84,7 @@ def add_todo(user):
         due_date = DueDate(date=datetime.strptime(due_date_str, "%Y-%m-%d %H:%M:%S"))
 
         todo = user.create_todo(task, category, due_date)
-        print(Fore.LIGHTGREEN_EX + f'Success: <{task}> added to your todos!')
+        print(Fore.LIGHTGREEN_EX + f'Success: <{task}> added to your todos! \U0001F601')
     except Exception as exc:
         print(Fore.RED + "Error adding todo: ", exc)
 
@@ -115,7 +115,7 @@ def remove_todo(user):
         # Call the delete_todo function to delete the selscted todo
         user.delete_todo(delete_id)
 
-        print(Fore.LIGHTGREEN_EX + f"Success: Todo deleted!")
+        print(Fore.LIGHTGREEN_EX + f"Success: Todo deleted! \U0001F601")
     except Exception as exc:
         print(Fore.RED + "Error removing todo: ", exc)
 
@@ -125,7 +125,7 @@ def change_username(user):
         print(Fore.LIGHTMAGENTA_EX + "----------------------------------------------------")         
         new_username = input("Enter the new username: ")
         user.update_username(new_username)
-        print(Fore.LIGHTGREEN_EX + f"Success: Username updated to {new_username}")
+        print(Fore.LIGHTGREEN_EX + f"Success: Username updated to {new_username} \U0001F601")
     except Exception as exc:
         print(Fore.RED + "Error changing username: ", exc)
 
@@ -205,7 +205,7 @@ def change_task(user):
             try:
                 todo.update_task(new_task)
                 print(Fore.LIGHTMAGENTA_EX + "******")
-                print(Fore.LIGHTGREEN_EX + f"Task successfully changed to <{new_task}!>")
+                print(Fore.LIGHTGREEN_EX + f"Task successfully changed to <{new_task}!> \U0001F601")
             except Exception as exc:
                 print(Fore.RED + f"Error updating task: ", exc)
         except ValueError:
@@ -213,3 +213,56 @@ def change_task(user):
             return
     except Exception as exc:
         print(Fore.RED + "Error getting todos: ", exc)
+
+
+def change_category(user):
+    try:
+        # Get all categories
+        categories = session.query(Category).all()
+        print(Fore.LIGHTMAGENTA_EX + "----------------------------------------------------") 
+        # loop through categories
+        for category in categories:
+            print(Fore.LIGHTYELLOW_EX + f">>> {category.name} Category ID: {category.id_}")
+            todos = category.get_todos()
+
+            # Filter todos by user
+            user_todos = [todo for todo in todos if todo.user_name == user.username]
+
+            # Print todos for the current category and user
+            for i, todo in enumerate(user_todos):
+                print(Fore.LIGHTWHITE_EX+ f"{i+1}. //-> Task ID: {todo.id_} //-> Task: {todo.task}")
+
+        #Prompt the user for the ID of the todo they want to change
+        try:
+            todo_id = int(input("Enter the ID of the task to change: "))
+        except ValueError:
+            print(Fore.RED + "Invalid input. ID must be an integer!")
+            return
+        
+        # Find the todo with the provided ID
+        todo = session.query(ToDo).get(todo_id)
+        if not todo:
+            print(Fore.RED + "Task not found!")
+
+        # Prompt the user for the ID of the new category
+        try:
+            category_id = int(input("Enter the new Category ID: "))
+        except ValueError:
+            print(Fore.RED + "Invalid input. ID must be an integer!")
+            return
+        
+        category = session.query(Category).get(category_id)
+        if not category:
+            print(Fore.RED + "Category not found!")
+            return
+        
+        # Update the category of the task using the update_category method
+        try:
+            todo.update_category(category.name)
+            print(Fore.LIGHTMAGENTA_EX + "******")
+            print(Fore.LIGHTGREEN_EX + f"Task category successfully updated to {category.name}!  \U0001F601")
+        except Exception as exc:
+            print(Fore.RED + f"Error updating task's category: ", exc)
+        
+    except Exception as exc:
+        print(Fore.RED + "Error getting categories:", exc)

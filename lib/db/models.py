@@ -1,6 +1,7 @@
 from sqlalchemy import Column, Integer, String, ForeignKey, DateTime, UniqueConstraint, create_engine
 from sqlalchemy.orm import relationship, declarative_base, sessionmaker
-
+from colorama import init, Fore
+init(autoreset=True)
 Base = declarative_base()
 
 class User(Base):
@@ -95,14 +96,32 @@ class ToDo(Base):
             todo.task = new_task
         session.commit()
     
-    def update_category(self, new_category):
+    def update_category(self, new_category_name):
+            # Get the new category object from the database
+        new_category = session.query(Category).filter_by(name=new_category_name).first()
+        if not new_category:
+            print(Fore.RED + "New category not found!")
+            return
+        
         # update the category for this todo 
+        old_category = self.category
         self.category = new_category
+
+        # Update the category for the task
+        todos = session.query(ToDo).filter_by(task=old_category).all()
+        for todo in todos:
+            todo.category_name = new_category.name     
         session.commit()
 
     def update_due_date(self, new_due_date):
         # update the due date for this todo
+        old_due_date = self.due_date
         self.due_date = new_due_date
+
+        # Update the date for the task
+        todos = session.query(ToDo).filter_by(task=old_due_date).all()
+        for todo in todos:
+            todo.task = new_due_date         
         session.commit()
 
 
