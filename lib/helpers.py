@@ -216,53 +216,49 @@ def change_task(user):
 
 
 def change_category(user):
+    # Get all categories
+    categories = session.query(Category).all()
+    print(Fore.LIGHTMAGENTA_EX + "----------------------------------------------------")
+
+    # Loop through categories
+    for category in categories:
+        print(Fore.LIGHTYELLOW_EX + f">>> ID: {category.id_} {category.name} ")
+        todos = category.get_todos()
+
+        # Filter todos by user
+        user_todos = [todo for todo in todos if todo.user_name == user.username]
+
+        # Print todos for the current category and user
+        for i, todo in enumerate(user_todos):
+            print(Fore.LIGHTWHITE_EX + f"{i+1}. ID: {todo.id_} {todo.task} (Due Date: {todo.due_date_date})")
+
+    print(Fore.LIGHTMAGENTA_EX + "******")
     try:
-        # Get all categories
-        categories = session.query(Category).all()
-        print(Fore.LIGHTMAGENTA_EX + "----------------------------------------------------") 
-        # loop through categories
+        # Prompt user for the task ID and new category name
+        task_id = input("Enter the Task ID you want to update: ")
+        print(Fore.LIGHTMAGENTA_EX + "******")
+        new_category_id = input("Enter the new category ID: ")
+
+        # Find the new category object
+        new_category = next((category for category in categories if category.id_ == new_category_id), None)
+        if not new_category:
+            print(Fore.RED + "New category not found!")
+            return
+
+        # Loop through categories
         for category in categories:
-            print(Fore.LIGHTYELLOW_EX + f">>> {category.name} Category ID: {category.id_}")
             todos = category.get_todos()
 
-            # Filter todos by user
-            user_todos = [todo for todo in todos if todo.user_name == user.username]
+            # Filter todos by user and task ID
+            user_todo = next((todo for todo in todos if todo.user_name == user.username and todo.id_ == task_id), None)
 
-            # Print todos for the current category and user
-            for i, todo in enumerate(user_todos):
-                print(Fore.LIGHTWHITE_EX+ f"{i+1}. //-> Task ID: {todo.id_} //-> Task: {todo.task}")
+            # Check if user_todo exists
+            if user_todo:
+                print(Fore.LIGHTWHITE_EX + f"Updating Task //-> Task ID: {user_todo.id_} //-> Task: {user_todo.task}")
+                # Update the category using the update_category method on the todo object
+                user_todo.update_category(new_category)
+                break
 
-        #Prompt the user for the ID of the todo they want to change
-        try:
-            todo_id = int(input("Enter the ID of the task to change: "))
-        except ValueError:
-            print(Fore.RED + "Invalid input. ID must be an integer!")
-            return
-        
-        # Find the todo with the provided ID
-        todo = session.query(ToDo).get(todo_id)
-        if not todo:
-            print(Fore.RED + "Task not found!")
+    except Exception as e:
+        print(Fore.RED + f"Error updating task's category: {str(e)}")
 
-        # Prompt the user for the ID of the new category
-        try:
-            category_id = int(input("Enter the new Category ID: "))
-        except ValueError:
-            print(Fore.RED + "Invalid input. ID must be an integer!")
-            return
-        
-        category = session.query(Category).get(category_id)
-        if not category:
-            print(Fore.RED + "Category not found!")
-            return
-        
-        # Update the category of the task using the update_category method
-        try:
-            todo.update_category(category.name)
-            print(Fore.LIGHTMAGENTA_EX + "******")
-            print(Fore.LIGHTGREEN_EX + f"Task category successfully updated to {category.name}!  \U0001F601")
-        except Exception as exc:
-            print(Fore.RED + f"Error updating task's category: ", exc)
-        
-    except Exception as exc:
-        print(Fore.RED + "Error getting categories:", exc)

@@ -96,13 +96,7 @@ class ToDo(Base):
             todo.task = new_task
         session.commit()
     
-    def update_category(self, new_category_name):
-            # Get the new category object from the database
-        new_category = session.query(Category).filter_by(name=new_category_name).first()
-        if not new_category:
-            print(Fore.RED + "New category not found!")
-            return
-        
+    def update_category(self, new_category):
         # update the category for this todo 
         old_category = self.category
         self.category = new_category
