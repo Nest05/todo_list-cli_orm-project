@@ -1,3 +1,7 @@
+from art import *
+from colorama import init, Fore
+init(autoreset=True)
+
 from helpers import (
     exit_program,
     login,
@@ -8,7 +12,7 @@ from helpers import (
     category_todos,
     add_user
 )
-
+tprint("BespokeRoutine", font="random")
 def main():
     user = None # Initialize user as None
     while True:
@@ -49,10 +53,10 @@ def sub_main(user):
             return_or_exit()
 
 def menu():
-    print("----------------------------------------------------")
-    print("\U0001F30D \U0001F6EB \U0001F3CA ***Todo Menu*** \U0001FA82 \U0001F4DA \U0001F393")
-    print("Select what you would like to do: ")
-    print("0. Exit the manager")
+    print(Fore.LIGHTMAGENTA_EX + "----------------------------------------------------")
+    tprint(" ***Todo Menu*** ", font="small", decoration=)
+    print(Fore.LIGHTCYAN_EX + "Select what you would like to do: ")
+    print(Fore.RED + "0. Exit the manager")
     print("1. Add a todo")
     print("2. Remove a todo")
     print("3. Change username")
@@ -60,18 +64,18 @@ def menu():
     print("5. Todos by category")
 
 def login_menu():
-    print("----------------------------------------------------")
-    print("\U0001F5D2 Welcome to your trusted todo manager! \U0001F4D3")
+    print(Fore.LIGHTMAGENTA_EX + "----------------------------------------------------")
+    print(Fore.LIGHTCYAN_EX + "\U0001F5D2  Welcome to your trusted todo manager! \U0001F4D3")
     print("login below: ")
-    print("0. Exit the manager")
+    print(Fore.RED + "0. Exit the manager")
     print("1. Login")
     print("2. Signup")
 
 def return_or_exit():
-    print("----------------------------------------------------")
-    print("Would you like to return to the menu or exit?")
+    print(Fore.LIGHTMAGENTA_EX + "----------------------------------------------------")
+    print(Fore.LIGHTCYAN_EX + "Would you like to return to the menu or exit?")
     print("1. Return to the menu")
-    print("2. Exit")
+    print(Fore.RED + "2. Exit")
     choice = input("> ")
     if choice == "1":
         return
@@ -79,10 +83,10 @@ def return_or_exit():
         exit_program()
 
 def try_again():
-    print("----------------------------------------------------")
-    print("Would you like to the login menu or exit?")
+    print(Fore.LIGHTMAGENTA_EX + "----------------------------------------------------")
+    print(Fore.LIGHTCYAN_EX + "Would you like to the login menu or exit?")
     print("1. Return to the login menu")
-    print("2. Exit")
+    print(Fore.RED + "2. Exit")
     choice = input("> ")
     if choice == "1":
         return
