@@ -108,7 +108,7 @@ class ToDo(Base):
         self.category = new_category
 
         # Update the category for the task
-        todos = session.query(ToDo).filter_by(task=old_category).all()
+        todos = session.query(ToDo).filter_by(category_name=old_category.name).all()
         for todo in todos:
             todo.category_name = new_category.name     
         session.commit()
