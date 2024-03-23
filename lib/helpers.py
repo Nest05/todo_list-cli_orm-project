@@ -238,9 +238,8 @@ def change_category(user):
         task_id = input("Enter the Task ID you want to update: ")
         print(Fore.LIGHTMAGENTA_EX + "******")
         new_category_id = input("Enter the new category ID: ")
-
         # Find the new category object
-        new_category = next((category for category in categories if category.id_ == new_category_id), None)
+        new_category = next((category for category in categories if str(category.id_) == new_category_id), None)
         if not new_category:
             print(Fore.RED + "New category not found!")
             return
@@ -248,10 +247,8 @@ def change_category(user):
         # Loop through categories
         for category in categories:
             todos = category.get_todos()
-
             # Filter todos by user and task ID
-            user_todo = next((todo for todo in todos if todo.user_name == user.username and todo.id_ == task_id), None)
-
+            user_todo = next((todo for todo in todos if todo.user_name == user.username and str(todo.id_ )== task_id), None)
             # Check if user_todo exists
             if user_todo:
                 print(Fore.LIGHTWHITE_EX + f"Updating Task //-> Task ID: {user_todo.id_} //-> Task: {user_todo.task}")
@@ -259,6 +256,5 @@ def change_category(user):
                 user_todo.update_category(new_category)
                 break
 
-    except Exception as e:
-        print(Fore.RED + f"Error updating task's category: {str(e)}")
-
+    except Exception as exc:
+        print(Fore.RED + f"Error updating task's category: ", exc)

@@ -97,15 +97,10 @@ class ToDo(Base):
         session.commit()
     
     def update_category(self, new_category):
-        # update the category for this todo 
-        old_category = self.category
+        # Update the category for this todo only
         self.category = new_category
-
-        # Update the category for the task
-        todos = session.query(ToDo).filter_by(category_name=old_category.name).all()
-        for todo in todos:
-            todo.category_name = new_category.name     
         session.commit()
+
 
     def update_due_date(self, new_due_date):
         # update the due date for this todo
