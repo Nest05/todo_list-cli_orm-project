@@ -3,7 +3,6 @@ from datetime import datetime
 from getpass import getpass
 from quote import quote
 from py_random_words import RandomWords
-import emoji
 from colorama import init, Fore
 init(autoreset=True)
 
@@ -35,7 +34,7 @@ def add_user():
         session.add(new_user)
         session.commit()
 
-        print(Fore.GREEN + f"Welcome {username}! You signed up successfully!")
+        print(Fore.GREEN + f"Welcome {username}! You signed up successfully! You can now login in! \U0001F389")
     except Exception as exc:
         print(Fore.RED + "An error occured in the signup process:", exc)
 
@@ -76,6 +75,7 @@ def add_todo(user):
     try:
         print(Fore.LIGHTMAGENTA_EX + "----------------------------------------------------")
         task = input("Enter the task: ")
+        print(Fore.LIGHTGREEN_EX + "Available Categories: => Work, => Study, => Personal, => Travel")
         category_name = input("Enter the category: ")
         due_date_str = input("Enter the due date (YYYY-MM-DD HH:MM:SS): ")
 
@@ -104,7 +104,8 @@ def remove_todo(user):
         for todo in todos:
             print(Fore.LIGHTMAGENTA_EX + "******")
             print(Fore.LIGHTWHITE_EX + f"ID: {todo.id_} //-> Todo: {todo.task} //-> DueDate \U000023F3: {todo.due_date_date}")
-
+        
+        print(Fore.LIGHTMAGENTA_EX + "******")
         # Prompt the user to enter the ID of the todo they want to delete
         try:
             delete_id = int(input(Fore.RED + "[Warning: Once deleted it cannot be retrived!]Enter the ID of the todo to delete: "))
@@ -222,7 +223,7 @@ def change_category(user):
 
     # Loop through categories
     for category in categories:
-        print(Fore.LIGHTYELLOW_EX + f">>> ID: {category.id_} {category.name} ")
+        print(Fore.LIGHTYELLOW_EX + f">>> [[ID: {category.id_}]] {category.name} ")
         todos = category.get_todos()
 
         # Filter todos by user
@@ -230,7 +231,7 @@ def change_category(user):
 
         # Print todos for the current category and user
         for i, todo in enumerate(user_todos):
-            print(Fore.LIGHTWHITE_EX + f"{i+1}. ID: {todo.id_} {todo.task} (Due Date: {todo.due_date_date})")
+            print(Fore.LIGHTWHITE_EX + f"{i+1}. [*ID: {todo.id_}*] {todo.task} (Due Date: {todo.due_date_date})")
 
     print(Fore.LIGHTMAGENTA_EX + "******")
     try:

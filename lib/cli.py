@@ -107,7 +107,7 @@ def return_or_exit():
 def try_again():
     options = ["1", "2"] # Valid options
     print(Fore.LIGHTMAGENTA_EX + "----------------------------------------------------")
-    print(Fore.LIGHTCYAN_EX + "Would you like to the login menu or exit?")
+    print(Fore.LIGHTCYAN_EX + "Would you like to go to the login menu or exit?")
     print("1. Return to the login menu")
     print(Fore.RED + "2. Exit")
     choice = input("> ")

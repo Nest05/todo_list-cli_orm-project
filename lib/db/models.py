@@ -1,7 +1,5 @@
 from sqlalchemy import Column, Integer, String, ForeignKey, DateTime, UniqueConstraint, create_engine
 from sqlalchemy.orm import relationship, declarative_base, sessionmaker
-from colorama import init, Fore
-init(autoreset=True)
 Base = declarative_base()
 
 class User(Base):
@@ -87,13 +85,7 @@ class ToDo(Base):
 
     def update_task(self, new_task):
         # update the task for this todo
-        old_task = self.task
         self.task = new_task
-
-        # Update the task in the todos table
-        todos = session.query(ToDo).filter_by(task=old_task).all()
-        for todo in todos:
-            todo.task = new_task
         session.commit()
     
     def update_category(self, new_category):
@@ -104,13 +96,7 @@ class ToDo(Base):
 
     def update_due_date(self, new_due_date):
         # update the due date for this todo
-        old_due_date = self.due_date
-        self.due_date = new_due_date
-
-        # Update the date for the task
-        todos = session.query(ToDo).filter_by(task=old_due_date).all()
-        for todo in todos:
-            todo.task = new_due_date         
+        self.due_date = new_due_date       
         session.commit()
 
 
