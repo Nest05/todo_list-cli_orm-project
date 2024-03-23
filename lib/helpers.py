@@ -251,7 +251,7 @@ def change_category(user):
             user_todo = next((todo for todo in todos if todo.user_name == user.username and str(todo.id_ )== task_id), None)
             # Check if user_todo exists
             if user_todo:
-                print(Fore.LIGHTWHITE_EX + f"Updating Task //-> Task ID: {user_todo.id_} //-> Task: {user_todo.task}")
+                print(Fore.LIGHTGREEN_EX + f"Updating <//-> Task: {user_todo.task}> to <<{new_category.name}>> successful!  \U0001F601")
                 # Update the category using the update_category method on the todo object
                 user_todo.update_category(new_category)
                 break
