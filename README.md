@@ -4,7 +4,7 @@ This is a CLI(Command Line Interface)+ORM(Object-Relational Mapper) project, usi
 
 ## Description
 
-This todo manager enable you to create tables an store data about your todos.
+This todo manager enable you to create tables and store data about your todos.
 - It requires a simple sign up for access
 - After, signing up you can then log in and start the process of:
 -> Adding todos
